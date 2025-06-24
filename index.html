@@ -1,1839 +1,744 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Movies</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LzPlayVIP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2468/2468825.png" type="image/x-icon" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    header {
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      z-index: 50;
+    }
+    #header-title, #header-recomendadas {
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #main-title {
+      transition: opacity 0.3s ease;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen bg-black text-white overflow-x-hidden">
+
+  <!-- Fondo -->
+  <div class="absolute inset-0 z-0 h-[60vh] md:h-[70vh]">
+    <img
+      src="https://img.freepik.com/foto-gratis/sala-cine-paquete-palomitas-gafas-3d_23-2148133546.jpg"
+      alt="Fondo"
+      class="w-full h-full object-cover"
     />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-      body {
-        font-family: 'Montserrat', sans-serif;
-      }
-      @layer utilities {
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-      }
-    </style>
-    <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool@latest'></script>
-  </head>
-  <body class="bg-black text-white relative">
-
-    <!-- Sidebar Background Overlay -->
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" onclick="toggleSidebar(false)"></div>
-
-    <!-- Sidebar Menu -->
-   <!-- Sidebar Menu -->
-<aside id="sidebar" class="fixed top-0 left-0 w-64 h-full bg-gray-900 z-50 transform -translate-x-full transition-transform duration-300">
-  <div class="flex justify-between items-center p-4 border-b border-gray-700">
-    <h2 class="text-lg font-semibold">Menu</h2>
-    <button onclick="toggleSidebar(false)" class="text-white text-xl">
-      
-    </button>
+    <div class="absolute inset-0 bg-blue-900/60"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black"></div>
   </div>
-  <nav class="flex flex-col space-y-4 p-4 flex-grow">
-    <a href="https://zinecia.github.io/Home" class="hover:text-blue-400">Regresar</a>
-    <a href="https://zinecia.github.io/Buscador/" class="hover:text-blue-400">Buscar</a>
-    <a href="https://zinecia.github.io/Movie" class="hover:text-blue-400">Peli­culas</a>
-    <a href="https://zinecia.github.io/Favoritos/" class="hover:text-blue-400">Favoritos</a>
-    <a href="https://cuentaappcreator.github.io/streaming/" class="hover:text-blue-400">Streaming</a>
-  </nav>
 
-  <!-- Boton para cerrar menu al final -->
-  <div class="p-4 border-t border-gray-700">
-    <button
-      onclick="toggleSidebar(false)"
-      class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 rounded"
-      aria-label="Cerrar menÃº"
-    >
-      Cerrar menu
-    </button>
-  </div>
-</aside>
+  
+  <div class="relative z-10">
 
-
-    <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-3 py-2 bg-black">
-
-      <!-- BotÃ³n del menÃº -->
-      <button aria-label="Menu" class="text-white text-2xl" onclick="toggleSidebar(true)">
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <!-- Logo con enlace -->
-      <a href="https://zinecia.github.io/Home" class="block w-28 sm:w-32">
-       <h1>MOVIES</h1>
+   
+    <header id="main-header" class="pt-3 pb-3 px-4 sm:pt-4 sm:pb-4 sm:px-6 flex items-center space-x-3 sm:space-x-4 text-white">
+      <a href="javascript:window.history.back();" aria-label="Volver" class="text-white text-2xl sm:text-3xl flex-shrink-0">
+        <i class="fas fa-chevron-left"></i>
       </a>
 
-      <!-- Boton de busqueda -->
-      <a href="https://zinecia.github.io/Buscador/"><button aria-label="Search" class="text-white text-2xl"> 
-        <i class="fas fa-search"></i>
-      </button></a>
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3dK3-XAKrEia-lWmiUqAYRfFQ1lR9eJX6ZZH8e_vHf576qf9GJjIWBW9Jg5LsilXX7WO2MOEkg5gzc4pESziaPeMJ9ws9mwtCDdp3p_17D0e0Uop_ZxavwwJeNLBvoyZJ0cxTKQpjzrJIR6LjJslB24tj-77AYrRCacQ3F2S2VPoXpPzPhM1zndxyd1Rg/s3307/B64D5386-DCA4-410B-A0A6-6ACB19D0A06F.png"
+        alt="Logo"
+        class="h-6 sm:h-7 object-contain flex-shrink-0" />
+      
+      <h1 id="header-title" class="ml-2 sm:ml-4 text-lg sm:text-xl font-normal opacity-0 max-w-xs sm:max-w-sm"></h1>
+
+      <div class="flex-1"></div>
+
+    
+      <button id="header-recomendadas" class="opacity-0 transition-opacity duration-300 border border-white rounded-full px-3 py-1 text-xs sm:text-sm flex items-center space-x-1 whitespace-nowrap">
+        <i class="fas fa-random"></i> <span>Aleatorio</span>
+      </button>
     </header>
 
-    <!-- Main Content -->
-    <main class="px-3 pb-6 pt-14">
+    <main class="px-4 sm:px-6 pb-6 pt-14 max-w-7xl mx-auto">
 
-      <div class="grid grid-cols-3 sm:grid-cols-[repeat(auto-fit,_minmax(140px,_1fr))] gap-3 mt-3">
 
-        <!--PEGAR CONTENIDO AQUI ABAJO-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido147/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/9oXAJaR58sukn59HmFZzDCy79E5.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      �...Y Donde Estan las Rubias?
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido146/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/jFb9o09UgJ6RZUf8cx8zxNzIgG6.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Yo los declaro Marido y... Larry
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido145/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/rglSEPbB5bA3EWzqellWjlVsKA1.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Jack y Jill
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido144/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/dPYfCNERtVySmPmEHbfSXTyFg3v.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Son Como Ni�os 2
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido143/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/rEQTerbvmbCgRl47MvY49pgD2yu.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Son Como Ni�os
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido142/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/aVLm7uud6Oh1wmhiR4vOrngQKo8.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Luna de Miel en Familia
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido141/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/g5JdaRO2MQHiDARlYNXu3NAnH3S.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Hombres, mujeres y ni�os
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido140/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/d45faoiDeZsrdIdYpLy34vtYf3S.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Pixeles
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido139/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/l6sK4FIxKf3KLHqY5v6aQPYWKiP.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Los 6 Ridiculos
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido138/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/26FvvFp5Z0egOpnAtFxbxgYcBY.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Sandy Wexler
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido137/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/6msXZiZXPmad2DCgW7OWYQ5KuU0.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      La peor semana
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido136/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/1tOzBr9wvo37KgFiFYLc16AGvAX.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Diamantes en bruto
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido135/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/jOIH3wCtz3y4DonPDoHqSz0VjDj.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      La Liga de la Justicia: La paradoja del tiempo
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido134/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/cyh9hxRjItIOb0gMt2P44LXnUMH.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Liga de la Justicia x RWBY: Superheroes y Cazadores: Parte 2
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido133/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/7twNCiHS1rR7P2fyGOH1sUmLDyY.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Liga de la Justicia x RWBY: Superheroes y Cazadores: Parte 1
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido132/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/wcIJgChypo0s6ILm9Dkr13rV5q0.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      La Liga de la Justicia de Zack Snyder
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido131/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/kr36D6FiF8mNrsPz4fL6OUAvrrJ.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Liga de la Justicia: Crisis en Tierras Infinitas - Parte 1
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido130/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/wUWqnavD8iGZ5F4xXhWlrtEzKjV.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Liga de la Justicia
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido129/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/a0QwtpUNIKjOlNoOVmk7d2LFnQW.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Aquaman y el reino perdido
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido128/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/yTzr6Nc4RcTXVw9SsWQNJdcjTz5.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Aquaman
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido127/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/mYpT2R7639KvKZ668uoQGS2QNFp.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Pantera Negra: Wakanda por siempre
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido126/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/laXrmaTRuroArSPfsGlvTbeWxVA.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El viaje de Chihiro
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido125/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiuOWsjr7oRrV-nfTAaWWj8m5o7AsmsSqqMMSgq0vzmDiSa9bGAETYDV75qhB4_gzUHzCNyYAcO6GHvLEC1qwd0Q5Wbo_R1tZXpLuXUhegPu7VICLupGTwezQahdCEhikHiRvbC_CV7KZY5YVlmfP2c47CLE406ST0YSCMzBBFF9BlXG_VzHmxzPurWwv1y/s850/imagen.jpeg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Mi vecino Totoro
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido124/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/wyXPANZMYYbKh8Ic8qFLqMkolyV.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Las aventuras de Sharkboy y Lavagirl
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido123/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/aUBw4YOmew5lwsAqbOJ9CG7tmDN.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Viernes negro
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido120/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/3MyKXb1ozCfq61tPNKpIggwvP6J.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Shrek 4: Para Siempre
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido119/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/7sTwtmVPTX77CFOUXdwAM7lKtKL.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Shrek Tercero
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido118/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/knRt4E8KyfwEv0SVu9LsLvD28IQ.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Shrek 2
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido117/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Shrek
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido116/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/llHklmHQEDwTgbwGrPvQ5ouSy2k.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Ruega Por Nosotros
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido115/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/iaGfB2itLC8exBvfLUoadS0Q6tP.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Terrifier 3: Payaso Siniestro
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido114/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/mj2Z9HnRSIEk3n7yVPoOY4Uzzfh.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      John Wick 4
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido113/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/aKw7oqYdfn4pkKYvp18Gd1YhK6m.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      John Wick 3: Parabellum
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido112/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/z7c8EQ40Zk5reKuUluvWPVLE3rt.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      John Wick 2: Un Nuevo Dia para Matar
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido111/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/d7YxLE6ohg7TnDLYr6DEvyAxnC8.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      John Wick 1: Otro Dia para Matar
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido102/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/jEiaU5pApM6YN3MIGEFnvJFHVzU.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Taylor Swift: The Eras Tour
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido101/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/4jcJHqIVsb4MFdYrDajXeEVlDvH.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Morbius
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido100/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/sM8hwgWZlmZf0h4aOkNopb3HBIo.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Cincuenta Sombras Liberadas
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido99/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/jvBAQOg2ObZKYXZGxYSz3Fkr7Qt.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Cincuenta Sombras Mas Oscuras
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido98/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/mNZcZOIlTwDKd30xLnRR4p0ZELg.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Cincuenta Sombras de Grey
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido97/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/zEak97hxXEdgwm2Z22tUGoR4NlC.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Y nadie mas que tu
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido96/index.html"> 
+  <div class="flex justify-between items-center mb-3">
+    <h1 id="main-title" class="text-3xl font-normal">ALL MOVIES</h1>
+    <button id="btn-recomendadas" class="border border-white rounded-full px-3 py-1 text-sm flex items-center">
+      <i class="fas fa-random"></i>
+    </button>
+  </div>
+
+
+      <p id="description" class="text-white text-base mb-4 max-w-xl leading-relaxed">
+        LzPlay no es solo una app, es el reflejo del esfuerzo, la dedicacion y la pasion de su creador. Cada pelicula aqui disponible ha sido seleccionada, organizada y subida con el compromiso de brindar una experiencia de entretenimiento accesible, elegante y completa para todos.
+
+Gracias a Lz, hoy puedes disfrutar de un catalogo variado, funcional y siempre actualizado, diseñado con amor por el cine y pensado especialmente para ti.
+Bienvenido al universo de LzPlay, donde cada historia esta al alcance de un clic.
+      </p>
+
+
+      <div class="flex items-center justify-center text-white text-sm mb-4 space-x-3">
+        <div class="border-b border-white w-16"></div>
+        <span id="contenido-total" class="whitespace-nowrap">Contenido: 0</span>
+        <div class="border-b border-white w-16"></div>
+      </div>
+
+  <!-- Contenedor de carteles -->
+  <div id="posters-grid" class="grid grid-cols-3 sm:grid-cols-[repeat(auto-fit,_minmax(140px,_1fr))] gap-3 mt-3">
+    <!--PEGAR CONTENIDO AQUI ABAJO-->
+	<!--INICIO-->
+<a href="https://Zinecia.github.io/peli23/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/fi2pg2mtAZwhq3qVuAs6PztjnHT.jpg"
+        src="https://image.tmdb.org/t/p/w500/wktniKrRfM6yXI2zEsLz9M3gNWP.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Bob Esponja 3: Al Rescate
+      La momia 3: La tumba del emperador Dragon
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido95/index.html"> 
+<a href="https://Zinecia.github.io/peli22/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/z5aphafm6OEcAq4jwOs5Ml9F384.jpg"
+        src="https://image.tmdb.org/t/p/w500/2eTqYQ2g0hKOuYfIazgy2EdH1SS.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Bob Esponja: Un heroe fuera del agua
+      La muerte de Superman
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido94/index.html"> 
+<a href="https://Zinecia.github.io/peli21/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/CtISczftMz6g7kyk5uLxBben8b.jpg"
+        src="https://image.tmdb.org/t/p/w500/fQFY3IsdwLl2O5z5YEh97R8A7hY.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Bob Esponja: La pelicula
+      Batman y Superman: La Batalla de los Super hijos
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido93/index.html"> 
+<a href="https://Zinecia.github.io/peli20/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/hRjZWOGom0Iif6sQTZOLMGWs5xY.jpg"
+        src="https://image.tmdb.org/t/p/w500/fvzAtcrcp3CzcXPQhK2OZjavRS1.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El Ciempies Humano 2: Secuencia completa
+      Superfly
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido92/index.html"> 
+<a href="https://Zinecia.github.io/peli19/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/ucBv96WOHdzl2aIGv6BPtgqS9iN.jpg"
+        src="https://image.tmdb.org/t/p/w500/podzoGfamoxObotrMMoH2WIc8nj.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El Ciempies Humano: Primera secuencia
+      Superinteligencia
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido91/index.html"> 
+<a href="https://Zinecia.github.io/peli18/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/8kQqTtPEkYhlNjLgxByrr8H28ly.jpg"
+        src="https://image.tmdb.org/t/p/w500/3rlU3gwaKobcdrmIBTRfyGcE6ew.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El Defensor
+      Bird Box Barcelona
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido90/index.html"> 
+<a href="https://Zinecia.github.io/peli17/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/4vsTMm9HttoWkqhCoFVV9rPb5cS.jpg"
+        src="https://image.tmdb.org/t/p/w500/sSkEkCxsEs9LuHZzA2IZYyvd9x4.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El poder del talisman
+      CODA: Los sonidos del silencio
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido89/index.html"> 
+<a href="https://Zinecia.github.io/peli16/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/8F74DwgFxTIBNtbqSLjR7zWmnHh.jpg"
+        src="https://image.tmdb.org/t/p/w500/iNu6kc0C99hP29JRmg1uDUGmtrw.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Venom 3: El ultimo baile
+      Anomalisa
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido88/index.html"> 
+<a href="https://Zinecia.github.io/peli15/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/b0j9rHYpRML7dKm5xw9e97HTDJF.jpg"
+        src="https://image.tmdb.org/t/p/w500/8LJVauVacKhi0xuUa8aKTPGn4pW.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Venom 2: Carnage Liberado
+      Dream Scenario
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido87/index.html"> 
+<a href="https://Zinecia.github.io/peli14/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/jMBTJQiHAyGlZR05J2sq5coA6ew.jpg"
+        src="https://image.tmdb.org/t/p/w500/y6wkgEH1gTWAafH9Bc7cNNut0Kf.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Venom
+      Moana
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido86/index.html"> 
+<a href="https://Zinecia.github.io/peli13/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/tkdc73JiPVvzngSpbLEIfFNjll1.jpg"
+        src="https://image.tmdb.org/t/p/w500/74VLJ09lDqNvJHeIgmwJHtualhR.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Garfield: Fuera de casa
+      Inmaculada
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido85/index.html"> 
+<a href="https://Zinecia.github.io/peli12/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/n10AuSUxcJQEPtRw0uNdukpKQ1G.jpg"
+        src="https://image.tmdb.org/t/p/w500/3ALM0VeZjGUryAqWo6pqohzbLDh.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Garfield 2
+      La novia cadaver
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido84/index.html"> 
+<a href="https://Zinecia.github.io/peli11/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/pMQKL3Dx40au9e172ARVUWsT4qH.jpg"
+        src="https://image.tmdb.org/t/p/original/6le8RRVbcC1S9erP1ebhew2F2j3.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Garfield
+      WALL·E: Batallón de limpieza
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido83/index.html"> 
+<a href="https://Zinecia.github.io/peli10/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/joOEYpfltqoqkaiQio24TUTntGM.jpg"
+        src="https://image.tmdb.org/t/p/w500/A2EHkY8XcRahcl8S0yaNW2YiM3N.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Unicorn Wars
+      Batman: Gotham a Luz de Gas
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido82/index.html"> 
+<a href="https://Zinecia.github.io/peli09/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/eZi0LEb8DtxSrizMsGKi02Jw6ww.jpg"
+        src="https://image.tmdb.org/t/p/w500/9TFSqghEHrlBMRR63yTx80Orxva.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Hermanos
+      Deadpool y Lobezno
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido81/index.html"> 
+<a href="https://Zinecia.github.io/peli08/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/4IpuIeaXE0ZsjCvJBhVCfsI9BxG.jpg"
+        src="https://image.tmdb.org/t/p/w500/eVTlk5O6simP30vTd3sA1BNQZgV.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Snow Beast
+      La Torre Oscura
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido80/index.html"> 
+<a href="https://Zinecia.github.io/peli07/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/aM1TuUiPtV8OAZyu61CTdy9Ymtk.jpg"
+        src="https://image.tmdb.org/t/p/w500/953ZprqPxXSfhHvjBVRiIv7fSP6.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Harry Potter 8 y las reliquias de la muerte: Parte 2
+      El laberinto del fauno
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido79/index.html"> 
+<a href="https://Zinecia.github.io/peli06/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/original/fYyoJ4Yadk0MCBHZPFrgvMDl50o.jpg"
+        src="https://image.tmdb.org/t/p/w500/14Yjf8xW2uWkZ3ZhagbrKMXbe70.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Harry Potter 7 y las reliquias de la muerte (1� parte)
+      Campanilla y la leyenda de la bestia
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido78/index.html"> 
+<a href="https://Zinecia.github.io/peli05/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/nSb3nNiL6pOEDK34T0U6RKTGzlJ.jpg"
+        src="https://image.tmdb.org/t/p/w500/soPOZlksVHcumHnhyRlI3XtAVyx.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Harry Potter 6 y el misterio del principe
+      Campanilla: El secreto de las hadas
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido77/index.html"> 
+<a href="https://Zinecia.github.io/peli04/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/original/zN5DWGV6IO30asXrHzGju9mo20P.jpg"
+        src="https://image.tmdb.org/t/p/w500/7Jrap24Ki03bC39hbfyebw3xDul.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Harry Potter 5 y la orden del Fenix
+      Campanilla: Hadas y Piratas
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido76/index.html"> 
+<a href="https://Zinecia.github.io/peli03/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/6Cn5Lx9kqhXzTNV5QXwZ3RW5pBg.jpg"
+        src="https://image.tmdb.org/t/p/w500/AmUOjwjgz1vGnAmnR51NVv0hqAe.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Harry Potter 4 y el caliz de fuego
+      Campanilla y el gran rescate
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido75/index.html"> 
+<a href="https://Zinecia.github.io/peli02/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/wF9aoo4YZmpKP4bZPSy4Zwwek6G.jpg"
+        src="https://image.tmdb.org/t/p/w500/s5ggvZQMXhP3O2dQD8iQE46K6b6.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Harry Potter 3 y el prisionero de Azkaban
+      Campanilla y el tesoro perdido
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido74/index.html"> 
+<a href="https://Zinecia.github.io/peli01/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/original/bhCfAzeMMg7GyLDT11yVM2i1NPh.jpg"
+        src="https://image.tmdb.org/t/p/w500/1pUkm0XAVVD2CrTF4YdGOVfXjTY.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Harry Potter 2 y la camara secreta
+      Campanilla
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido73/index.html"> 
+<a href="https://Zinecia.github.io/puertasecret/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/original/7xXJ15VEf7G9GdAuV1dO769yC73.jpg"
+        src="https://image.tmdb.org/t/p/w500/xz1HjxeqpIACyPtJMqv33Z2RjRP.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Harry Potter 1 y la piedra filosofal
+      Los mundos de Coraline
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido72/index.html"> 
+<a href="https://Zinecia.github.io/tipsmalos/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/lmg38wQ4Si1iAfZemjJ8QdSmjw2.jpg"
+        src="https://image.tmdb.org/t/p/w500/4njXv4s77hq9VGMOquvRQDiu53W.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      DAN DA DAN: Evil Eye
+      Los tipos malos: Truco o atraco?
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido71/index.html"> 
+<a href="https://Zinecia.github.io/abracadabra2/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/37WcNMgNOMxdhT87MFl7tq7FM1.jpg"
+        src="https://image.tmdb.org/t/p/w500/gbbZNVuGSD6cPGZ4sfcrA59EKNY.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Spider-Man: A traves del Spider-Verso
+      El retorno de las brujas 2
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido70/index.html"> 
+<a href="https://Zinecia.github.io/abracadabra1/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/xRMZikjAHNFebD1FLRqgDZeGV4a.jpg"
+        src="https://image.tmdb.org/t/p/w500/hnRo1RB791GbpERgV7cnM2sek2V.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Spider-Man: Un Nuevo Universo
+      El retorno de las brujas 1993 
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido69/index.html"> 
+<a href="https://Zinecia.github.io/minecraftm1/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/81qIJbnS2L0rUAAB55G8CZODpS5.jpg"
+        src="https://image.tmdb.org/t/p/w500/rZYYmjgyF5UP1AVsvhzzDOFLCwG.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Spider-Man: De Regreso a Casa
+      Una pelï¿½cula de Minecraft
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido68/index.html"> 
+<a href="https://zinecia.github.io/extraterritorial/"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/miZFgV81xG324rpUknQX8dtXuBl.jpg"
+        src="https://image.tmdb.org/t/p/w500/bTYbNWz4kI1P3GzEVvWZwyZT7Uv.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Spider-Man 3: Sin camino a casa
+      Extraterritorial
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido67/index.html"> 
+<a href="https://Zinecia.github.io/thunderbolts/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/o59zDVJDIehGcWZsMUGU5SN0V0D.jpg"
+        src="https://image.tmdb.org/t/p/original/zLbhKNJGDSfBCXFNtypM7ZuPTaW.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Spider-Man 2: Lejos de Casa
+      Thunderbolts* 2025 los nuevos avengers los vengadores
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido66/index.html"> 
+<a href="https://Zinecia.github.io/misionsentenciafinal/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/pyxjizLYG86Bxl4mntCWaWXZAko.jpg"
+        src="https://image.tmdb.org/t/p/w500/haOjJGUV00dKlZaJWgjM1UD1cJV.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El Sorprendente Hombre-Ara�a 2: La Amenaza de Electro
+      Misiï¿½n: Imposible - Sentencia final
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido65/index.html"> 
+<a href="https://Zinecia.github.io/destinofinal6/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/4cw1Vpp68ec518BHiS6gfa3yDoU.jpg"
+        src="https://image.tmdb.org/t/p/w500/frNkbclQpexf3aUzZrnixF3t5Hw.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El Sorprendente Hombre-Ara�a
+      Destino final 6: Lazos de sangre
     </p>
   </article>
 </a>
 <!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido64/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/589rUff9Ai272uMudb9Dn7k88Oa.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El hombre ara�a 3
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido63/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/bf0KrQZceXP7jQNUxfpMxSGVf5E.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El hombre ara�a 2
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido62/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/bCDaKZLRkrVVtPNyHxUfKvepW1N.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El hombre ara�a
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido61/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/AnPwhS4narxS6fD7fHuhehfnQzz.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      LEGO DC Comics Super Heroes: The Flash
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido60/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/e2kafXczo1Ezai6aXGO7nhNRtyf.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Anaconda
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido59/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/cjIWPGHQDxmaFLbmn4HUHRunC2f.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Ese es mi hijo
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido58/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/6ED3G0lpBXRZtEDJD2xVYsqIwxI.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      X-Men: Primera generacion
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido57/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/8nPw22C41EUWXREWmY9iIivMXxm.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      After: En mil pedazos
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido56/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/jO3VGQi5sHIj2BGS963g1F74yCq.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      After: Para siempre
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido55/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/5kZxlS9vLExy3hZA5GfNFg8oJgZ.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      After: Aqui empieza todo
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido54/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/cAvUp7ngPyuhx1nLjmCOTCBNo91.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      After: Almas Perdidas
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido53/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/vcI9BD5kMmVI45Pzj5B1ZaGpFIR.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      After: Amor Infinito
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido52/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/wWtK2Kg4afUaQ2LVzQKsdcvJnLa.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Bajo La Misma Estrella
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido51/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/cYtAU7GtSEoBD9EuS311RCNTb6K.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Violet y Finch
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido50/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/to0spRl1CMDvyUbOnbb4fTk3VAd.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Deadpool 2
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido49/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/original/3Wm440ayXLPVdRX56u9uuf7YAfd.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Deadpool
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido48/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/vUNj55xlF0pSU5FU3yDHC6L5wVX.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Capitan America: Un nuevo mundo
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-<!--INICIO-->
-<a href="https://Zinecia.github.io/contenido47/index.html"> 
+        <!--INICIO-->
+<a href="https://Zinecia.github.io/reyleon1/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/jPPy7tCfglppQo6J9nGwU6UmJ8X.jpg"
+        src="https://image.tmdb.org/t/p/w500/b0MxU37dNmMwKtoPVYPKOZSIrIn.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Capitan America 3: Civil War
+      El rey leÃ³n
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/contenido46/index.html"> 
+<a href="https://Zinecia.github.io/espantatiburones/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/original/70XyV7aizwVYC4v6KXHyiZhdPnH.jpg"
+        src="https://image.tmdb.org/t/p/w500/3vI17Q3mfkIEpvwItomxMy5w1gw.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        MOVIE
+        Movie
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Capitan America 2 y el Soldado del Invierno
+      El espantatiburones
     </p>
   </article>
 </a>
 <!--FINAL-->
-<!--INICIO-->
+	<!--INICIO-->
 <a href="https://Zinecia.github.io/contenido45/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
@@ -4193,720 +3098,1822 @@
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli23/index.html"> 
+<a href="https://Zinecia.github.io/contenido147/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/wktniKrRfM6yXI2zEsLz9M3gNWP.jpg"
+        src="https://image.tmdb.org/t/p/w500/9oXAJaR58sukn59HmFZzDCy79E5.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      La momia 3: La tumba del emperador Dragon
+      Y Donde Estan las Rubias?
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli22/index.html"> 
+<a href="https://Zinecia.github.io/contenido146/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/2eTqYQ2g0hKOuYfIazgy2EdH1SS.jpg"
+        src="https://image.tmdb.org/t/p/w500/jFb9o09UgJ6RZUf8cx8zxNzIgG6.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      La muerte de Superman
+      Yo los declaro Marido y... Larry
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli21/index.html"> 
+<a href="https://Zinecia.github.io/contenido145/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/fQFY3IsdwLl2O5z5YEh97R8A7hY.jpg"
+        src="https://image.tmdb.org/t/p/w500/rglSEPbB5bA3EWzqellWjlVsKA1.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Batman y Superman: La Batalla de los Super hijos
+      Jack y Jill
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli20/index.html"> 
+<a href="https://Zinecia.github.io/contenido144/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/fvzAtcrcp3CzcXPQhK2OZjavRS1.jpg"
+        src="https://image.tmdb.org/t/p/original/dPYfCNERtVySmPmEHbfSXTyFg3v.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Superfly
+      Son Como Ni�os 2
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli19/index.html"> 
+<a href="https://Zinecia.github.io/contenido143/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/podzoGfamoxObotrMMoH2WIc8nj.jpg"
+        src="https://image.tmdb.org/t/p/original/rEQTerbvmbCgRl47MvY49pgD2yu.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Superinteligencia
+      Son Como Ni�os
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli18/index.html"> 
+<a href="https://Zinecia.github.io/contenido142/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/3rlU3gwaKobcdrmIBTRfyGcE6ew.jpg"
+        src="https://image.tmdb.org/t/p/w500/aVLm7uud6Oh1wmhiR4vOrngQKo8.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Bird Box Barcelona
+      Luna de Miel en Familia
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli17/index.html"> 
+<a href="https://Zinecia.github.io/contenido141/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/sSkEkCxsEs9LuHZzA2IZYyvd9x4.jpg"
+        src="https://image.tmdb.org/t/p/w500/g5JdaRO2MQHiDARlYNXu3NAnH3S.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      CODA: Los sonidos del silencio
+      Hombres, mujeres y ni�os
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli16/index.html"> 
+<a href="https://Zinecia.github.io/contenido140/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/iNu6kc0C99hP29JRmg1uDUGmtrw.jpg"
+        src="https://image.tmdb.org/t/p/w500/d45faoiDeZsrdIdYpLy34vtYf3S.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Anomalisa
+      Pixeles
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli15/index.html"> 
+<a href="https://Zinecia.github.io/contenido139/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/8LJVauVacKhi0xuUa8aKTPGn4pW.jpg"
+        src="https://image.tmdb.org/t/p/w500/l6sK4FIxKf3KLHqY5v6aQPYWKiP.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Dream Scenario
+      Los 6 Ridiculos
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli14/index.html"> 
+<a href="https://Zinecia.github.io/contenido138/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/y6wkgEH1gTWAafH9Bc7cNNut0Kf.jpg"
+        src="https://image.tmdb.org/t/p/w500/26FvvFp5Z0egOpnAtFxbxgYcBY.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Moana
+      Sandy Wexler
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli13/index.html"> 
+<a href="https://Zinecia.github.io/contenido137/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/74VLJ09lDqNvJHeIgmwJHtualhR.jpg"
+        src="https://image.tmdb.org/t/p/w500/6msXZiZXPmad2DCgW7OWYQ5KuU0.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Inmaculada
+      La peor semana
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli12/index.html"> 
+<a href="https://Zinecia.github.io/contenido136/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/3ALM0VeZjGUryAqWo6pqohzbLDh.jpg"
+        src="https://image.tmdb.org/t/p/w500/1tOzBr9wvo37KgFiFYLc16AGvAX.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      La novia cadaver
+      Diamantes en bruto
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli11/index.html"> 
+<a href="https://Zinecia.github.io/contenido135/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/original/6le8RRVbcC1S9erP1ebhew2F2j3.jpg"
+        src="https://image.tmdb.org/t/p/w500/jOIH3wCtz3y4DonPDoHqSz0VjDj.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      WALL·E: Batallón de limpieza
+      La Liga de la Justicia: La paradoja del tiempo
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli10/index.html"> 
+<a href="https://Zinecia.github.io/contenido134/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/A2EHkY8XcRahcl8S0yaNW2YiM3N.jpg"
+        src="https://image.tmdb.org/t/p/w500/cyh9hxRjItIOb0gMt2P44LXnUMH.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Batman: Gotham a Luz de Gas
+      Liga de la Justicia x RWBY: Superheroes y Cazadores: Parte 2
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli09/index.html"> 
+<a href="https://Zinecia.github.io/contenido133/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/9TFSqghEHrlBMRR63yTx80Orxva.jpg"
+        src="https://image.tmdb.org/t/p/w500/7twNCiHS1rR7P2fyGOH1sUmLDyY.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Deadpool y Lobezno
+      Liga de la Justicia x RWBY: Superheroes y Cazadores: Parte 1
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli08/index.html"> 
+<a href="https://Zinecia.github.io/contenido132/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/eVTlk5O6simP30vTd3sA1BNQZgV.jpg"
+        src="https://image.tmdb.org/t/p/w500/wcIJgChypo0s6ILm9Dkr13rV5q0.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      La Torre Oscura
+      La Liga de la Justicia de Zack Snyder
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli07/index.html"> 
+<a href="https://Zinecia.github.io/contenido131/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/953ZprqPxXSfhHvjBVRiIv7fSP6.jpg"
+        src="https://image.tmdb.org/t/p/w500/kr36D6FiF8mNrsPz4fL6OUAvrrJ.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El laberinto del fauno
+      Liga de la Justicia: Crisis en Tierras Infinitas - Parte 1
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli06/index.html"> 
+<a href="https://Zinecia.github.io/contenido130/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/14Yjf8xW2uWkZ3ZhagbrKMXbe70.jpg"
+        src="https://image.tmdb.org/t/p/w500/wUWqnavD8iGZ5F4xXhWlrtEzKjV.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Campanilla y la leyenda de la bestia
+      Liga de la Justicia
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli05/index.html"> 
+<a href="https://Zinecia.github.io/contenido129/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/soPOZlksVHcumHnhyRlI3XtAVyx.jpg"
+        src="https://image.tmdb.org/t/p/w500/a0QwtpUNIKjOlNoOVmk7d2LFnQW.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Campanilla: El secreto de las hadas
+      Aquaman y el reino perdido
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli04/index.html"> 
+<a href="https://Zinecia.github.io/contenido128/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/7Jrap24Ki03bC39hbfyebw3xDul.jpg"
+        src="https://image.tmdb.org/t/p/w500/yTzr6Nc4RcTXVw9SsWQNJdcjTz5.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Campanilla: Hadas y Piratas
+      Aquaman
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli03/index.html"> 
+<a href="https://Zinecia.github.io/contenido127/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/AmUOjwjgz1vGnAmnR51NVv0hqAe.jpg"
+        src="https://image.tmdb.org/t/p/w500/mYpT2R7639KvKZ668uoQGS2QNFp.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Campanilla y el gran rescate
+      Pantera Negra: Wakanda por siempre
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli02/index.html"> 
+<a href="https://Zinecia.github.io/contenido126/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/s5ggvZQMXhP3O2dQD8iQE46K6b6.jpg"
+        src="https://image.tmdb.org/t/p/w500/laXrmaTRuroArSPfsGlvTbeWxVA.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Campanilla y el tesoro perdido
+      El viaje de Chihiro
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/peli01/index.html"> 
+<a href="https://Zinecia.github.io/contenido125/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/1pUkm0XAVVD2CrTF4YdGOVfXjTY.jpg"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiuOWsjr7oRrV-nfTAaWWj8m5o7AsmsSqqMMSgq0vzmDiSa9bGAETYDV75qhB4_gzUHzCNyYAcO6GHvLEC1qwd0Q5Wbo_R1tZXpLuXUhegPu7VICLupGTwezQahdCEhikHiRvbC_CV7KZY5YVlmfP2c47CLE406ST0YSCMzBBFF9BlXG_VzHmxzPurWwv1y/s850/imagen.jpeg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Campanilla
+      Mi vecino Totoro
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/puertasecret/index.html"> 
+<a href="https://Zinecia.github.io/contenido124/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/xz1HjxeqpIACyPtJMqv33Z2RjRP.jpg"
+        src="https://image.tmdb.org/t/p/original/wyXPANZMYYbKh8Ic8qFLqMkolyV.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Los mundos de Coraline
+      Las aventuras de Sharkboy y Lavagirl
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/tipsmalos/index.html"> 
+<a href="https://Zinecia.github.io/contenido123/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/4njXv4s77hq9VGMOquvRQDiu53W.jpg"
+        src="https://image.tmdb.org/t/p/w500/aUBw4YOmew5lwsAqbOJ9CG7tmDN.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Los tipos malos: Truco o atraco?
+      Viernes negro
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/abracadabra2/index.html"> 
+<a href="https://Zinecia.github.io/contenido120/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/gbbZNVuGSD6cPGZ4sfcrA59EKNY.jpg"
+        src="https://image.tmdb.org/t/p/w500/3MyKXb1ozCfq61tPNKpIggwvP6J.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El retorno de las brujas 2
+      Shrek 4: Para Siempre
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/abracadabra1/index.html"> 
+<a href="https://Zinecia.github.io/contenido119/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/hnRo1RB791GbpERgV7cnM2sek2V.jpg"
+        src="https://image.tmdb.org/t/p/w500/7sTwtmVPTX77CFOUXdwAM7lKtKL.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El retorno de las brujas 1993 
+      Shrek Tercero
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/minecraftm1/index.html"> 
+<a href="https://Zinecia.github.io/contenido118/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/rZYYmjgyF5UP1AVsvhzzDOFLCwG.jpg"
+        src="https://image.tmdb.org/t/p/w500/knRt4E8KyfwEv0SVu9LsLvD28IQ.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Una pelï¿½cula de Minecraft
+      Shrek 2
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://zinecia.github.io/extraterritorial/"> 
+<a href="https://Zinecia.github.io/contenido117/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/bTYbNWz4kI1P3GzEVvWZwyZT7Uv.jpg"
+        src="https://image.tmdb.org/t/p/original/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Extraterritorial
+      Shrek
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/thunderbolts/index.html"> 
+<a href="https://Zinecia.github.io/contenido116/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/original/zLbhKNJGDSfBCXFNtypM7ZuPTaW.jpg"
+        src="https://image.tmdb.org/t/p/w500/llHklmHQEDwTgbwGrPvQ5ouSy2k.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Thunderbolts* 2025 los nuevos avengers los vengadores
+      Ruega Por Nosotros
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/misionsentenciafinal/index.html"> 
+<a href="https://Zinecia.github.io/contenido115/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/haOjJGUV00dKlZaJWgjM1UD1cJV.jpg"
+        src="https://image.tmdb.org/t/p/w500/iaGfB2itLC8exBvfLUoadS0Q6tP.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Misiï¿½n: Imposible - Sentencia final
+      Terrifier 3: Payaso Siniestro
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/destinofinal6/index.html"> 
+<a href="https://Zinecia.github.io/contenido114/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/frNkbclQpexf3aUzZrnixF3t5Hw.jpg"
+        src="https://image.tmdb.org/t/p/w500/mj2Z9HnRSIEk3n7yVPoOY4Uzzfh.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      Destino final 6: Lazos de sangre
-    </p>
-  </article>
-</a>
-<!--FINAL-->
-        <!--INICIO-->
-<a href="https://Zinecia.github.io/reyleon1/index.html"> 
-  <article class="flex flex-col items-center">
-    <div class="relative w-full">
-      <img
-        src="https://image.tmdb.org/t/p/w500/b0MxU37dNmMwKtoPVYPKOZSIrIn.jpg"
-        alt="Poster"
-        class="w-full rounded-sm object-cover"
-      />
-      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
-      </span>
-    </div>
-    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El rey leÃ³n
+      John Wick 4
     </p>
   </article>
 </a>
 <!--FINAL-->
 <!--INICIO-->
-<a href="https://Zinecia.github.io/espantatiburones/index.html"> 
+<a href="https://Zinecia.github.io/contenido113/index.html"> 
   <article class="flex flex-col items-center">
     <div class="relative w-full">
       <img
-        src="https://image.tmdb.org/t/p/w500/3vI17Q3mfkIEpvwItomxMy5w1gw.jpg"
+        src="https://image.tmdb.org/t/p/w500/aKw7oqYdfn4pkKYvp18Gd1YhK6m.jpg"
         alt="Poster"
         class="w-full rounded-sm object-cover"
       />
       <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
-        Movie
+        MOVIE
       </span>
     </div>
     <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
-      El espantatiburones
+      John Wick 3: Parabellum
     </p>
   </article>
 </a>
 <!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido112/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/z7c8EQ40Zk5reKuUluvWPVLE3rt.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      John Wick 2: Un Nuevo Dia para Matar
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido111/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/d7YxLE6ohg7TnDLYr6DEvyAxnC8.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      John Wick 1: Otro Dia para Matar
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido102/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/jEiaU5pApM6YN3MIGEFnvJFHVzU.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Taylor Swift: The Eras Tour
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido101/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/4jcJHqIVsb4MFdYrDajXeEVlDvH.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Morbius
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido100/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/sM8hwgWZlmZf0h4aOkNopb3HBIo.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Cincuenta Sombras Liberadas
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido99/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/jvBAQOg2ObZKYXZGxYSz3Fkr7Qt.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Cincuenta Sombras Mas Oscuras
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido98/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/mNZcZOIlTwDKd30xLnRR4p0ZELg.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Cincuenta Sombras de Grey
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido97/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/zEak97hxXEdgwm2Z22tUGoR4NlC.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Y nadie mas que tu
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido96/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/fi2pg2mtAZwhq3qVuAs6PztjnHT.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Bob Esponja 3: Al Rescate
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido95/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/z5aphafm6OEcAq4jwOs5Ml9F384.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Bob Esponja: Un heroe fuera del agua
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido94/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/CtISczftMz6g7kyk5uLxBben8b.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Bob Esponja: La pelicula
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido93/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/hRjZWOGom0Iif6sQTZOLMGWs5xY.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El Ciempies Humano 2: Secuencia completa
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido92/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/ucBv96WOHdzl2aIGv6BPtgqS9iN.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El Ciempies Humano: Primera secuencia
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido91/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/8kQqTtPEkYhlNjLgxByrr8H28ly.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El Defensor
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido90/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/4vsTMm9HttoWkqhCoFVV9rPb5cS.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El poder del talisman
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido89/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/8F74DwgFxTIBNtbqSLjR7zWmnHh.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Venom 3: El ultimo baile
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido88/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/b0j9rHYpRML7dKm5xw9e97HTDJF.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Venom 2: Carnage Liberado
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido87/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/jMBTJQiHAyGlZR05J2sq5coA6ew.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Venom
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido86/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/tkdc73JiPVvzngSpbLEIfFNjll1.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Garfield: Fuera de casa
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido85/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/n10AuSUxcJQEPtRw0uNdukpKQ1G.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Garfield 2
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido84/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/pMQKL3Dx40au9e172ARVUWsT4qH.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Garfield
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido83/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/joOEYpfltqoqkaiQio24TUTntGM.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Unicorn Wars
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido82/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/eZi0LEb8DtxSrizMsGKi02Jw6ww.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Hermanos
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido81/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/4IpuIeaXE0ZsjCvJBhVCfsI9BxG.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Snow Beast
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido80/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/aM1TuUiPtV8OAZyu61CTdy9Ymtk.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Harry Potter 8 y las reliquias de la muerte: Parte 2
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido79/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/fYyoJ4Yadk0MCBHZPFrgvMDl50o.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Harry Potter 7 y las reliquias de la muerte (1� parte)
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido78/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/nSb3nNiL6pOEDK34T0U6RKTGzlJ.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Harry Potter 6 y el misterio del principe
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido77/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/zN5DWGV6IO30asXrHzGju9mo20P.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Harry Potter 5 y la orden del Fenix
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido76/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/6Cn5Lx9kqhXzTNV5QXwZ3RW5pBg.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Harry Potter 4 y el caliz de fuego
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido75/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/wF9aoo4YZmpKP4bZPSy4Zwwek6G.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Harry Potter 3 y el prisionero de Azkaban
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido74/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/bhCfAzeMMg7GyLDT11yVM2i1NPh.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Harry Potter 2 y la camara secreta
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido73/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/7xXJ15VEf7G9GdAuV1dO769yC73.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Harry Potter 1 y la piedra filosofal
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido72/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/lmg38wQ4Si1iAfZemjJ8QdSmjw2.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      DAN DA DAN: Evil Eye
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido71/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/37WcNMgNOMxdhT87MFl7tq7FM1.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Spider-Man: A traves del Spider-Verso
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido70/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/xRMZikjAHNFebD1FLRqgDZeGV4a.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Spider-Man: Un Nuevo Universo
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido69/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/81qIJbnS2L0rUAAB55G8CZODpS5.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Spider-Man: De Regreso a Casa
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido68/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/miZFgV81xG324rpUknQX8dtXuBl.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Spider-Man 3: Sin camino a casa
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido67/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/o59zDVJDIehGcWZsMUGU5SN0V0D.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Spider-Man 2: Lejos de Casa
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido66/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/pyxjizLYG86Bxl4mntCWaWXZAko.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El Sorprendente Hombre-Ara�a 2: La Amenaza de Electro
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido65/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/4cw1Vpp68ec518BHiS6gfa3yDoU.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El Sorprendente Hombre-Ara�a
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido64/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/589rUff9Ai272uMudb9Dn7k88Oa.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El hombre ara�a 3
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido63/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/bf0KrQZceXP7jQNUxfpMxSGVf5E.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El hombre ara�a 2
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido62/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/bCDaKZLRkrVVtPNyHxUfKvepW1N.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      El hombre ara�a
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido61/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/AnPwhS4narxS6fD7fHuhehfnQzz.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      LEGO DC Comics Super Heroes: The Flash
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido60/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/e2kafXczo1Ezai6aXGO7nhNRtyf.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Anaconda
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido59/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/cjIWPGHQDxmaFLbmn4HUHRunC2f.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Ese es mi hijo
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido58/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/6ED3G0lpBXRZtEDJD2xVYsqIwxI.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      X-Men: Primera generacion
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido57/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/8nPw22C41EUWXREWmY9iIivMXxm.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      After: En mil pedazos
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido56/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/jO3VGQi5sHIj2BGS963g1F74yCq.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      After: Para siempre
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido55/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/5kZxlS9vLExy3hZA5GfNFg8oJgZ.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      After: Aqui empieza todo
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido54/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/cAvUp7ngPyuhx1nLjmCOTCBNo91.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      After: Almas Perdidas
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido53/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/vcI9BD5kMmVI45Pzj5B1ZaGpFIR.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      After: Amor Infinito
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido52/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/wWtK2Kg4afUaQ2LVzQKsdcvJnLa.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Bajo La Misma Estrella
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido51/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/cYtAU7GtSEoBD9EuS311RCNTb6K.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Violet y Finch
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido50/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/to0spRl1CMDvyUbOnbb4fTk3VAd.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Deadpool 2
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido49/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/3Wm440ayXLPVdRX56u9uuf7YAfd.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Deadpool
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido48/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/vUNj55xlF0pSU5FU3yDHC6L5wVX.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Capitan America: Un nuevo mundo
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido47/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/w500/jPPy7tCfglppQo6J9nGwU6UmJ8X.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Capitan America 3: Civil War
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+<!--INICIO-->
+<a href="https://Zinecia.github.io/contenido46/index.html"> 
+  <article class="flex flex-col items-center">
+    <div class="relative w-full">
+      <img
+        src="https://image.tmdb.org/t/p/original/70XyV7aizwVYC4v6KXHyiZhdPnH.jpg"
+        alt="Poster"
+        class="w-full rounded-sm object-cover"
+      />
+      <span class="absolute top-1 left-1 bg-blue-700 text-xs px-2 rounded-full font-semibold select-none">
+        MOVIE
+      </span>
+    </div>
+    <p class="mt-1 text-center text-xs font-semibold leading-tight line-clamp-2">
+      Capitan America 2 y el Soldado del Invierno
+    </p>
+  </article>
+</a>
+<!--FINAL-->
+	
 
+  </div>
+</main>
 
-       
-      </div>
-    </main>
+  </div>
 
-    <!-- JS para abrir/cerrar el sidebar -->
-    <script>
-      function toggleSidebar(open) {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        if (open) {
-          sidebar.classList.remove('-translate-x-full');
-          overlay.classList.remove('hidden');
+  <script>
+    const mainTitle = document.getElementById('main-title');
+    const headerTitle = document.getElementById('header-title');
+    const header = document.getElementById('main-header');
+    const description = document.getElementById('description');
+    const mainBtnRecomendadas = document.getElementById('btn-recomendadas');
+    const headerBtnRecomendadas = document.getElementById('header-recomendadas');
+    const postersGrid = document.getElementById('posters-grid');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          header.classList.add('fixed', 'top-0', 'left-0', 'right-0', 'bg-black/90', 'backdrop-blur-sm', 'shadow-md', 'z-50');
+          headerTitle.textContent = mainTitle.textContent;
+          headerTitle.classList.remove('opacity-0');
+          headerTitle.classList.add('opacity-100');
+          headerBtnRecomendadas.classList.remove('opacity-0');
+          headerBtnRecomendadas.classList.add('opacity-100');
+          mainTitle.classList.add('opacity-0');
+          mainBtnRecomendadas.classList.add('hidden');
         } else {
-          sidebar.classList.add('-translate-x-full');
-          overlay.classList.add('hidden');
+          header.classList.remove('fixed', 'top-0', 'left-0', 'right-0', 'bg-black/90', 'backdrop-blur-sm', 'shadow-md');
+          headerTitle.classList.remove('opacity-100');
+          headerTitle.classList.add('opacity-0');
+          headerBtnRecomendadas.classList.remove('opacity-100');
+          headerBtnRecomendadas.classList.add('opacity-0');
+          mainTitle.classList.remove('opacity-0');
+          mainBtnRecomendadas.classList.remove('hidden');
         }
+      });
+    }, { threshold: 0 });
+
+    observer.observe(description);
+
+  
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
       }
-
-        document.addEventListener("DOMContentLoaded", function () {
-  function limpiarTextoRoto(texto) {
-    try {
-      let limpio = decodeURIComponent(escape(texto));
-      limpio = limpio.replace(/[^a-zA-Z0-9áéíóúüñÁÉÍÓÚÜÑ¡!¿?.,:;()\[\]{}<>«»"'°\-\s]/g, "");
-      return limpio;
-    } catch (e) {
-      return texto;
-    }
-  }
-
-  function limpiarNodo(node) {
-    // Limpiar texto de nodos de texto
-    if (node.nodeType === 3) {
-      node.textContent = limpiarTextoRoto(node.textContent);
+      return array;
     }
 
-    // Limpiar atributos de elementos HTML
-    if (node.nodeType === 1) {
-      const atributos = ["alt", "title", "placeholder", "aria-label"];
-      atributos.forEach(attr => {
-        if (node.hasAttribute(attr)) {
-          node.setAttribute(attr, limpiarTextoRoto(node.getAttribute(attr)));
-        }
-      });
+    function reorganizarPeliculas() {
+      const items = Array.from(postersGrid.querySelectorAll('a'));
+      const shuffled = shuffle(items);
+      postersGrid.innerHTML = '';
+      shuffled.forEach(item => postersGrid.appendChild(item));
     }
 
-    // Recursividad para limpiar todo
-    node.childNodes.forEach(hijo => limpiarNodo(hijo));
-  }
+    mainBtnRecomendadas.addEventListener('click', reorganizarPeliculas);
+    headerBtnRecomendadas.addEventListener('click', reorganizarPeliculas);
+	
 
-  // Limpieza inicial
-  limpiarNodo(document.body);
+const totalContenedor = document.getElementById('contenido-total');
+function actualizarTotalContenido() {
+  const total = postersGrid.querySelectorAll('a').length;
+  totalContenedor.textContent = `Contenido: ${total}`;
+}
+actualizarTotalContenido();
 
-  // Observador para cambios futuros (dinámicos)
-  const observer = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
-      mutation.addedNodes.forEach(nodo => {
-        limpiarNodo(nodo);
-      });
-    });
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-    characterData: true
-  });
-});
-    </script>
-  </body>
+  </script>
+<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool@latest'></script>
+</body>
 </html>
