@@ -10941,94 +10941,88 @@ Bienvenido al universo de LzPlay, donde cada historia esta al alcance de un clic
 </main>
 
   </div>
+<script>
+  const mainTitle = document.getElementById('main-title');
+  const headerTitle = document.getElementById('header-title');
+  const header = document.getElementById('main-header');
+  const description = document.getElementById('description');
+  const mainBtnRecomendadas = document.getElementById('btn-recomendadas');
+  const headerBtnRecomendadas = document.getElementById('header-recomendadas');
+  const postersGrid = document.getElementById('posters-grid');
+  const totalContenedor = document.getElementById('contenido-total');
+  const verMasBtn = document.getElementById('ver-mas-btn');
 
-  <script>
-    const mainTitle = document.getElementById('main-title');
-    const headerTitle = document.getElementById('header-title');
-    const header = document.getElementById('main-header');
-    const description = document.getElementById('description');
-    const mainBtnRecomendadas = document.getElementById('btn-recomendadas');
-    const headerBtnRecomendadas = document.getElementById('header-recomendadas');
-    const postersGrid = document.getElementById('posters-grid');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-          header.classList.add('fixed', 'top-0', 'left-0', 'right-0', 'bg-black/90', 'backdrop-blur-sm', 'shadow-md', 'z-50');
-          headerTitle.textContent = mainTitle.textContent;
-          headerTitle.classList.remove('opacity-0');
-          headerTitle.classList.add('opacity-100');
-          headerBtnRecomendadas.classList.remove('opacity-0');
-          headerBtnRecomendadas.classList.add('opacity-100');
-          mainTitle.classList.add('opacity-0');
-          mainBtnRecomendadas.classList.add('hidden');
-        } else {
-          header.classList.remove('fixed', 'top-0', 'left-0', 'right-0', 'bg-black/90', 'backdrop-blur-sm', 'shadow-md');
-          headerTitle.classList.remove('opacity-100');
-          headerTitle.classList.add('opacity-0');
-          headerBtnRecomendadas.classList.remove('opacity-100');
-          headerBtnRecomendadas.classList.add('opacity-0');
-          mainTitle.classList.remove('opacity-0');
-          mainBtnRecomendadas.classList.remove('hidden');
-        }
-      });
-    }, { threshold: 0 });
-
-    observer.observe(description);
-
-  
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        header.classList.add('fixed', 'top-0', 'left-0', 'right-0', 'bg-black/90', 'backdrop-blur-sm', 'shadow-md', 'z-50');
+        headerTitle.textContent = mainTitle.textContent;
+        headerTitle.classList.remove('opacity-0');
+        headerTitle.classList.add('opacity-100');
+        headerBtnRecomendadas.classList.remove('opacity-0');
+        headerBtnRecomendadas.classList.add('opacity-100');
+        mainTitle.classList.add('opacity-0');
+        mainBtnRecomendadas.classList.add('hidden');
+      } else {
+        header.classList.remove('fixed', 'top-0', 'left-0', 'right-0', 'bg-black/90', 'backdrop-blur-sm', 'shadow-md');
+        headerTitle.classList.remove('opacity-100');
+        headerTitle.classList.add('opacity-0');
+        headerBtnRecomendadas.classList.remove('opacity-100');
+        headerBtnRecomendadas.classList.add('opacity-0');
+        mainTitle.classList.remove('opacity-0');
+        mainBtnRecomendadas.classList.remove('hidden');
       }
-      return array;
+    });
+  }, { threshold: 0 });
+
+  observer.observe(description);
+
+  function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
+  }
 
-    function reorganizarPeliculas() {
-      const items = Array.from(postersGrid.querySelectorAll('a'));
-      const shuffled = shuffle(items);
-      postersGrid.innerHTML = '';
-      shuffled.forEach(item => postersGrid.appendChild(item));
+  function reorganizarPeliculas() {
+    var items = Array.from(postersGrid.querySelectorAll('a'));
+    var shuffled = shuffle(items);
+    postersGrid.innerHTML = '';
+    shuffled.forEach(item => postersGrid.appendChild(item));
+  }
+
+  mainBtnRecomendadas.addEventListener('click', reorganizarPeliculas);
+  headerBtnRecomendadas.addEventListener('click', reorganizarPeliculas);
+
+
+  var allItems = Array.from(postersGrid.querySelectorAll('a'));
+  var currentIndex = 0;
+  var itemsPerPage = 30;
+
+  function mostrarMasContenido() {
+    var fragment = document.createDocumentFragment();
+    for (var i = currentIndex; i < currentIndex + itemsPerPage && i < allItems.length; i++) {
+      fragment.appendChild(allItems[i]);
     }
-
-    mainBtnRecomendadas.addEventListener('click', reorganizarPeliculas);
-    headerBtnRecomendadas.addEventListener('click', reorganizarPeliculas);
-	
-
-const totalContenedor = document.getElementById('contenido-total');
-function actualizarTotalContenido() {
-  const total = postersGrid.querySelectorAll('a').length;
-  totalContenedor.textContent = `Contenido: ${total}`;
-}
-actualizarTotalContenido();
-
-	
-var allItems = Array.from(postersGrid.querySelectorAll('a'));
-var currentIndex = 0;
-var itemsPerPage = 30;
-var verMasBtn = document.getElementById('ver-mas-btn');
-
-function mostrarMasContenido() {
-  var fragment = document.createDocumentFragment();
-  for (var i = currentIndex; i < currentIndex + itemsPerPage && i < allItems.length; i++) {
-    fragment.appendChild(allItems[i]);
+    postersGrid.appendChild(fragment);
+    currentIndex += itemsPerPage;
+    if (currentIndex >= allItems.length) {
+      verMasBtn.style.display = 'none';
+    }
+    actualizarTotalContenido();
   }
-  postersGrid.appendChild(fragment);
-  currentIndex += itemsPerPage;
-  if (currentIndex >= allItems.length) {
-    verMasBtn.style.display = 'none';
+
+  function actualizarTotalContenido() {
+    totalContenedor.textContent = `Contenido: ${allItems.length}`;
   }
-  actualizarTotalContenido();
-}
 
+  postersGrid.innerHTML = '';
+  mostrarMasContenido();
 
-postersGrid.innerHTML = '';
-mostrarMasContenido();
+  verMasBtn.addEventListener('click', mostrarMasContenido);
+</script>
 
-verMasBtn.addEventListener('click', mostrarMasContenido);
-
-  </script>
 <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool@latest'></script>
 </body>
 </html>
